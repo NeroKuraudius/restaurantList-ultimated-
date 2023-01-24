@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const port = 3000
 const exphbs = require('express-handlebars')
-const restaurantList = require('./restaurant.json')
+const Restaurant = require('./models/restaurants')
 
 const mongoose = require('mongoose') // 引入mongoose
 if (process.env.NODE_ENV !== 'production') { // 若node環境變數非production 
@@ -27,8 +27,13 @@ app.use(express.static('public'))
 
 // 設定首頁渲染
 app.get('/', (req, res) => {
-  const restaurants = restaurantList.results
-  res.render('index', { restaurant: restaurants })
+  Restaurant.find()
+    .lean()
+    .then(restaurants=>{
+      res.render('index', {restaurants})
+    })
+    .catch(error=>console.log(error))
+  
 })
 
 // 設定餐廳詳細資料渲染
