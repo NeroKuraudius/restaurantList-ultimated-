@@ -60,10 +60,13 @@ app.post('/restaurants/:id/delete', (req, res) => {
     .catch(error => console.log(error))
 })
 
-// 設定餐廳詳細資料渲染
+// 餐廳詳細資料渲染
 app.get('/restaurants/:id', (req, res) => {
-  const restaurant = restaurantList.results.find(shop => shop.id === Number(req.params.id))
-  res.render('show', { restaurant: restaurant })
+  const id = req.params.id
+  return Restaurant.findById(id)
+    .lean() // 把資料整理乾淨(非常重要)
+    .then(restaurant => res.render('show', { restaurant }))
+    .catch(error => console.log(error))
 })
 
 // 設定搜尋結果渲染
