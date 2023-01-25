@@ -69,6 +69,29 @@ app.get('/restaurants/:id', (req, res) => {
     .catch(error => console.log(error))
 })
 
+// 修改資料頁面
+app.get('/restaurants/:id/edit', (req, res) => {
+  const id = req.params.id
+  return Restaurant.findById(id)
+    .lean()
+    .then(restaurant => res.render('edit', { restaurant }))
+    .catch(error => console.log(error))
+})
+
+// 修改資料
+app.post('/restaurants/:id/edit', (req, res) => {
+  const id = req.params.id
+  const restaurantData = req.body
+  return Restaurant.findById(id)
+    // 以id搜尋出的資料存為restaurantData後，再以.save()儲存
+    .then(restaurant => {
+      restaurant = restaurantData
+      return restaurant.save()
+    })
+    .then(() => res.redirect(`/restaurants/${id}`))
+    .catch(error => console.log(error))
+})
+
 // 設定搜尋結果渲染
 app.get('/search', (req, res) => {
   const keyword = req.query.keyword.replace(" ", "")
