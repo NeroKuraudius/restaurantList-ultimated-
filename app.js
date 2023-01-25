@@ -51,6 +51,15 @@ app.post('/create', (req, res) => {
     .catch(error => console.log(error))
 })
 
+// 刪除餐廳資料
+app.post('/restaurants/:id/delete', (req, res) => {
+  const id = req.params.id
+  return Restaurant.findById(id)
+    .then(restaurant => restaurant.remove())
+    .then(res.redirect('/'))
+    .catch(error => console.log(error))
+})
+
 // 設定餐廳詳細資料渲染
 app.get('/restaurants/:id', (req, res) => {
   const restaurant = restaurantList.results.find(shop => shop.id === Number(req.params.id))
