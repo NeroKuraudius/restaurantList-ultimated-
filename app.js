@@ -94,11 +94,19 @@ app.post('/restaurants/:id/edit', (req, res) => {
 
 // 設定搜尋結果渲染
 app.get('/search', (req, res) => {
-  const keyword = req.query.keyword.replace(" ", "")
-  const restaurant = restaurantList.results.filter(shop => {
-    return shop.name.toLowerCase().includes(keyword.toLowerCase()) || shop.category.includes(keyword)
-  })
-  res.render('index', { restaurant: restaurant, keyword: keyword })
+  const keyword = req.query.keyword.trim().toLowerCase()
+  if (!keyword || !keyword.length) {
+    return res.redirect('/')
+  }
+
+  Restaurant.find() // .find()中沒條件表示全部取出
+    .lean() // 資料處理乾淨後再動作 ※非常重要
+    .then(shops => { // shops：未篩選資料
+      const shopsList = shops.filter(shop => shop.name.toLowerCase().includes(keyword) || shop.category.toLowerCase().includes(keyword))
+      // shopsList：篩選後資料 、 shop：shops中取出篩選的單筆資料
+      res.render('index', { restaurants: shopsList, keyword })
+    })
+    .catch(error => console.log(error))
 })
 
 app.listen(port, () => {
