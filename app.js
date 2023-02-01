@@ -1,6 +1,7 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
 const mongoose = require('mongoose') // 引入mongoose
+const methodOverrid = requier('method-override') 
 const Restaurant = require('./models/Restaurant.js')
 
 if (process.env.NODE_ENV !== 'production') { // 若node環境變數非production 
@@ -30,6 +31,9 @@ app.use(express.static('public'))
 // 設定body-parser
 app.use(express.urlencoded({ extended: true }))
 
+// 設定每筆路由都會先經由method-override進行前處理
+app.use(methodOverrid('_method'))
+
 // 設定首頁渲染
 app.get('/', (req, res) => {
   Restaurant.find()
@@ -52,7 +56,7 @@ app.post('/create', (req, res) => {
 })
 
 // 刪除餐廳資料
-app.post('/restaurants/:id/delete', (req, res) => {
+app.delete('/restaurants/:id', (req, res) => {
   const id = req.params.id
   return Restaurant.findById(id)
     .then(restaurant => restaurant.remove())
@@ -70,7 +74,7 @@ app.get('/restaurants/:id', (req, res) => {
 })
 
 // 修改資料頁面
-app.get('/restaurants/:id/edit', (req, res) => {
+app.get('/restaurants/:id', (req, res) => {
   const id = req.params.id
   return Restaurant.findById(id)
     .lean()
@@ -79,7 +83,7 @@ app.get('/restaurants/:id/edit', (req, res) => {
 })
 
 // 修改資料
-app.post('/restaurants/:id/edit', (req, res) => {
+app.put('/restaurants/:id/edit', (req, res) => {
   const id = req.params.id
   const restaurantData = req.body
   return Restaurant.findById(id)
