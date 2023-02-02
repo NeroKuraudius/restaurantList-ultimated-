@@ -1,5 +1,5 @@
 <!-- search bar -->
-<div class="container search-bar">
+<div class="container search-bar" style="max-width:540px;margin-left:200px;display:inline-block">
   <div class="search-bar-outer">
     <div class="search-bar-inner">
       <form action="/search">
@@ -16,11 +16,26 @@
   </div>
 </div>
 
+
+<!-- sort dropdown box -->
+<div class="dropdown" style="margin-left:280px;display: inline-block;">
+  <button class="btn btn-warning dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    排序方式
+  </button>
+  <ul class="dropdown-menu dropdown-menu-dark">
+    <li><a class="dropdown-item" href="#">A-Z</a></li>
+    <li><a class="dropdown-item" href="#">Z-A</a></li>
+    <li><a class="dropdown-item" href="#">類別</a></li>
+    <li><a class="dropdown-item" href="#">地區</a></li>
+  </ul>
+</div>
+
+
 <!-- create restaurant button -->
 <div class="container">
   <div class="container mt-4">
-    <div class="col-md-12 text-center">
-      <button type="button" class="btn btn-info" onclick="location.href='./new'">Creat New
+    <div class="col-md-12 text-center" style="display:flex;align-items:start;margin-left:80px">
+      <button type="button" class="btn btn-info" onclick="location.href='/restaurants/new'">Creat New
         Restaurant</button>
     </div>
   </div>
