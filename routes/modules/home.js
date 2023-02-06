@@ -3,6 +3,10 @@
 const express = require('express')
 const router = express.Router()
 const Restaurant = require('../../models/Restaurant.js')
+const selectedValue = require('../../public/javascripts/selectedValue.js')
+const sorter = require('../../public/javascripts/sorter')
+const selected = require('../../public/javascripts/selectedValue')
+
 
 //首頁渲染
 router.get('/', (req, res) => {
@@ -11,6 +15,19 @@ router.get('/', (req, res) => {
     .sort({ _id: 'asc' }) //asc：正向排列(反向為desc)
     .then(restaurants => res.render("index", { restaurants }))
     .catch(error => console.log(error))
+})
+
+// 選擇排序方式
+router.post('/', (req, res) => {
+  const selection = req.body.sort ? req.body.sort : ''
+  const sortBy = sorter(selection)
+  const selectedValue = selected(selection)
+
+  Restaurant.find()
+    .lean()
+    .collation({ locale: 'en' }) // 處理不同語言問題
+    .sort(sortBy)
+    .then(restaurants => res.render("index", { restaurants, selectedValue }))
 })
 
 // 設定搜尋結果渲染

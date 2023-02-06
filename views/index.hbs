@@ -1,40 +1,42 @@
-<!-- search bar -->
-<div class="container search-bar" style="max-width:540px;margin-left:200px;display:inline-block">
-  <div class="search-bar-outer">
-    <div class="search-bar-inner">
-      <form action="/search">
-        <h4 class="mb-2">尋找餐廳：</h4>
-        <div class="input-group">
-          <input type="text" name="keyword" value="{{keyword}}" class="form-control" placeholder="輸入餐廳、分類"
-            aria-label="Restaurant Name..." value="" aria-describedby="search-button">
-          <div class="input-group-append">
-            <button class="btn btn-major" type="submit" id="search-button"><i class="fas fa-search"></i></button>
+<div class="main-container" style="display:flex;padding-right:60px">
+  <!-- search bar -->
+  <div class="container search-bar" style="max-width:540px">
+    <div class="search-bar-outer">
+      <div class="search-bar-inner">
+        <form action="/search">
+          <h4 class="mb-2">尋找餐廳：</h4>
+          <div class="input-group">
+            <input type="text" name="keyword" value="{{keyword}}" class="form-control" placeholder="輸入餐廳、分類"
+              aria-label="Restaurant Name..." value="" aria-describedby="search-button">
+            <div class="input-group-append">
+              <button class="btn btn-major" type="submit" id="search-button"><i class="fas fa-search"></i></button>
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
+  </div>
+
+
+  <!-- sort dropdown box -->
+  <div class="sortform" style="width:300px">
+    <form class="col-4" action="/" id="dropdown" method="POST">
+      <select class="form-select" name="sort" id="sort" onchange="this.form.submit()">
+        {{!-- {{#if}}{{/if}}的用法不是真的if，無法用來進行邏輯判斷，只能直接傳入True或False的值 --}}
+        <option id="asc" value="asc" {{#if selectedValue.asc}}selected="selected" {{/if}}>A-Z</option>
+        <option id="desc" value="desc" {{#if selectedValue.desc}}selected="selected" {{/if}}>Z-A</option>
+        <option id="bycategory" value="bycategory" {{#if selectedValue.bycategory}}selected="selected" {{/if}}>類別
+        </option>
+        <option id="byarea" value="byarea" {{#if selectedValue.byarea}}selected="selected" {{/if}}>地區</option>
+      </select>
+    </form>
   </div>
 </div>
 
-
-<!-- sort dropdown box -->
-<div class="dropdown" style="margin-left:280px;display: inline-block;">
-  <button class="btn btn-warning dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-    排序方式
-  </button>
-  <ul class="dropdown-menu dropdown-menu-dark">
-    <li><a class="dropdown-item" href="#">A-Z</a></li>
-    <li><a class="dropdown-item" href="#">Z-A</a></li>
-    <li><a class="dropdown-item" href="#">類別</a></li>
-    <li><a class="dropdown-item" href="#">地區</a></li>
-  </ul>
-</div>
-
-
 <!-- create restaurant button -->
-<div class="container">
+<div class="container mt-5">
   <div class="container mt-4">
-    <div class="col-md-12 text-center" style="display:flex;align-items:start;margin-left:80px">
+    <div class="col-md-12 text-center" style="display:flex;align-items:start;margin-left:70px">
       <button type="button" class="btn btn-info" onclick="location.href='/restaurants/new'">Creat New
         Restaurant</button>
     </div>
@@ -42,7 +44,7 @@
 </div>
 
 <!-- restaurant list -->
-<div class="container mt-5">
+<div class="container mt-3">
   <div class="row">
     <div class="col-md-10 col-12 mx-auto">
       <div class="row row-cols-sm-3">
