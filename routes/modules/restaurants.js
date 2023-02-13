@@ -50,10 +50,18 @@ router.put('/:id', (req, res) => {
   return Restaurant.findById(id)
     // 以id搜尋出的資料存為restaurantData後，再以.save()儲存
     .then(restaurant => {
-      restaurant = restaurantData
+      restaurant.name = restaurantData.name
+      restaurant.name_en = restaurantData.name_en
+      restaurant.category = restaurantData.category
+      restaurant.image = restaurantData.image
+      restaurant.location = restaurantData.location
+      restaurant.phone = restaurantData.phone
+      restaurant.google_map = restaurantData.google_map
+      restaurant.rating = Number(restaurantData.rating)
+      restaurant.description = restaurantData.description
       return restaurant.save()
     })
-    .then(() => res.redirect(`/${id}`))
+    .then(() => res.redirect(`/restaurants/${id}`))
     .catch(error => console.log(error))
 })
 
