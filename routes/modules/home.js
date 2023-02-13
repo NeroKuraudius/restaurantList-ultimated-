@@ -17,6 +17,7 @@ router.get('/', (req, res) => {
     .catch(error => console.log(error))
 })
 
+
 // 選擇排序方式
 router.post('/', (req, res) => {
   const selection = req.body.sort ? req.body.sort : ''
@@ -29,6 +30,7 @@ router.post('/', (req, res) => {
     .sort(sortBy)
     .then(restaurants => res.render("index", { restaurants, selectedValue }))
 })
+
 
 // 設定搜尋結果渲染
 router.get('/search', (req, res) => {

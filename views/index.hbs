@@ -20,7 +20,7 @@
 
   <!-- sort dropdown box -->
   <div class="sortform" style="width:300px">
-    <form class="col-4" action="/" id="dropdown" method="POST">
+    <form class="col-4" action={{#if keyword}}"/search"{{else}}"/"{{/if}}" id="dropdown" method="POST">
       <select class="form-select" name="sort" id="sort" onchange="this.form.submit()">
         {{!-- {{#if}}{{/if}}的用法不是真的if，無法用來進行邏輯判斷，只能直接傳入True或False的值 --}}
         <option id="asc" value="asc" {{#if selectedValue.asc}}selected="selected" {{/if}}>A-Z</option>
